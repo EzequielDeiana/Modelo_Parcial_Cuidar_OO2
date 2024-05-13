@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="datos.Permiso" table="permiso">
+
+        <id column="idpermiso" name="idpermiso">
+          <generator class="identity"/>
+        </id>
+
+        <property column="fecha" name="fecha" type="LocalDate"/>
+        
+        <many-to-one name="pedido" column="pedido" class="datos.Persona"></many-to-one>
+
+   		<set table="permiso_has_lugar" name="desdeHasta" outer-join="true">
+			<key column="permiso_idpermiso"/>
+			<many-to-many column="lugar_idlugar" class="datos.Lugar"/>
+		</set>
+       	
+		
+
+        <joined-subclass name="datos.PermisoPeriodo" table="PermisoPeriodo">
+        	<key column="idpermisoPeriodo"></key>
+        	
+        	<property name="cantDias" column="cantDias" type="int"></property>
+        	<property name="vacaciones" column="vacaciones" type="boolean"></property>
+        	
+        	<many-to-one name="rodado" column="rodado" class="datos.Rodado"></many-to-one>
+        	
+        </joined-subclass>
+        
+        <joined-subclass name="datos.PermisoDiario">
+			<key column="idpermisoDiario"></key>
+			
+			<property name="motivo" column="motivo" type="string"></property>
+			
+		</joined-subclass>
+        
+
+    </class>
+
+</hibernate-mapping>

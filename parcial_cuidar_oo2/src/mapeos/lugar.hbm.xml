@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="datos.Lugar" table="lugar">
+
+        <id column="idlugar" name="idlugar">
+          <generator class="identity"/>
+        </id>
+
+        <property column="lugar" name="lugar" type="string"/>
+        <property column="codigoPostal" name="codigoPostal" type="string"/>
+
+
+        <set table="permiso_has_lugar" name="desdeHasta" outer-join="true">
+			<key column="lugar_idlugar"/>
+			<many-to-many column="permiso_idpermiso" class="datos.Permiso"/>
+		</set>
+
+    </class>
+
+</hibernate-mapping>
